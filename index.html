@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calculadora (Vendas)</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#166088">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --text-color: #333;
+            --light-bg: #f7f3c3;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: var(--safe-area-inset-bottom);
+            -webkit-text-size-adjust: 100%;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: white;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        /* Remove spin buttons in WebKit browsers */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        button:hover, button:active {
+            background-color: var(--secondary-color);
+        }
+
+        .results {
+            margin-top: 25px;
+            background-color: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .step {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .final-result {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-top: 18px;
+            text-align: center;
+            padding: 12px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+        }
+
+        /* iOS specific adjustments */
+        @supports (-webkit-touch-callout: none) {
+            input[type="number"], button {
+                padding: 14px 15px;
+            }
+            button {
+                -webkit-font-smoothing: antialiased;
+            }
+        }
+
+        /* Android Chrome adjustments */
+        @media screen and (-webkit-min-device-pixel-ratio:0) {
+            input[type="number"] {
+                min-height: 44px;
+            }
+        }
+
+        /* Small devices */
+        @media (max-width: 480px) {
+            .header-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .logo {
+                height: 40px;
+            }
+            
+            header {
+                padding: 10px 0;
+            }
+            
+            .container {
+                padding: 15px;
+                margin: 15px 10px;
+                border-radius: 8px;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            input[type="number"], button {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+            
+            .final-result {
+                font-size: 1.2rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="https://jrjoiasfolheadas.com.br/wp-content/uploads/2024/07/marca-jr-joias-1024x472.png" alt="Logo da Empresa" class="logo">
+            <h1>Calculadora (Vendas)</h1>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="form-group">
+                <label for="peso">Peso (g)</label>
+                <input type="number" id="peso" value="" step="0.01" min="0" inputmode="decimal">
+            </div>
+            
+            <div class="form-group">
+                <label for="camada">Camada / M.Obra</label>
+                <input type="number" id="camada" value="" step="0.01" min="0" inputmode="decimal">
+            </div>
+            
+            <div class="form-group">
+                <label for="ouro">Valor do Ouro (R$/g)</label>
+                <input type="number" id="ouro" value="" step="0.01" min="0" inputmode="decimal">
+            </div>
+            
+            <div class="form-group">
+                <label for="quantidade">Quantidade de peças</label>
+                <input type="number" id="quantidade" value="" step="1" min="1" inputmode="numeric">
+            </div>
+            
+            <div class="form-group">
+                <label for="valorBruto">Valor Bruto (R$)</label>
+                <input type="number" id="valorBruto" value="" step="0.01" min="0" inputmode="decimal">
+            </div>
+            
+            <button id="calcular">Calcular</button>
+            
+            <div class="results" id="results" style="display: none;">
+                <h2>Detalhes do Cálculo</h2>
+                <div id="steps"></div>
+                <div class="final-result" id="finalResult"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('calcular').addEventListener('click', function() {
+            // Obter valores dos inputs
+            const peso = parseFloat(document.getElementById('peso').value) || 0;
+            const camada = parseFloat(document.getElementById('camada').value) || 0;
+            const ouro = parseFloat(document.getElementById('ouro').value) || 0;
+            const quantidade = parseInt(document.getElementById('quantidade').value) || 1;
+            const valorBruto = parseFloat(document.getElementById('valorBruto').value) || 0;
+            
+            // Calcular valores (por unidade)
+            const valorOuroPorPeca = peso * camada * ouro;  // Cálculo por peça única
+            const valorFinalPorPeca = valorOuroPorPeca + valorBruto;
+            const valorTotal = valorFinalPorPeca * quantidade;
+            
+            // Preparar passos do cálculo (ajustados para mostrar por unidade)
+            let steps = [];
+            
+            // Passo 1: Cálculo do ouro por peça
+            steps.push({
+                description: `Cálculo do ouro por peça (Peso × Camada × Ouro)`,
+                value: `R$ ${valorOuroPorPeca.toFixed(2)}`,
+                formula: `${peso}g × ${camada} × R$ ${ouro} = R$ ${valorOuroPorPeca.toFixed(2)}`
+            });
+            
+            // Passo 2: Adicionar valor bruto
+            steps.push({
+                description: `Adicionar valor bruto por peça`,
+                value: `R$ ${valorBruto.toFixed(2)}`,
+                formula: `R$ ${valorOuroPorPeca.toFixed(2)} + R$ ${valorBruto.toFixed(2)}`
+            });
+            
+            // Exibir resultados
+            const stepsContainer = document.getElementById('steps');
+            stepsContainer.innerHTML = '';
+            
+            steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'step';
+                stepElement.innerHTML = `
+                    <p><strong>Passo ${index + 1}:</strong> ${step.description}</p>
+                    <p><strong>Fórmula:</strong> ${step.formula}</p>
+                    <p><strong>Resultado:</strong> ${step.value}</p>
+                `;
+                stepsContainer.appendChild(stepElement);
+            });
+            
+            // Exibir valor por unidade e total
+            document.getElementById('finalResult').innerHTML = `
+                <p><strong>Valor por peça:</strong> R$ ${valorFinalPorPeca.toFixed(2)}</p>
+                <p><strong>Total (${quantidade} peça(s)):</strong> R$ ${valorTotal.toFixed(2)}</p>
+            `;
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll suave para os resultados
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    </script>
+</body>
+</html>
