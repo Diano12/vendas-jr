@@ -253,7 +253,7 @@
             
             <div class="form-group">
                 <label for="quantidade">Quantidade de peças</label>
-                <input type="number" id="quantidade" value="" step="1" min="0" inputmode="numeric">
+                <input type="number" id="quantidade" value="" step="1" min="1" inputmode="numeric">
             </div>
             
             <div class="form-group">
@@ -290,9 +290,9 @@
             
             // Passo 1: Cálculo do ouro por peça
             steps.push({
-                description: `Cálculo do ouro por peça (Peso × Camada × Ouro)`,
+                description: `Cálculo do ouro por peça (Peso × Camada/1000 × Ouro)`,
                 value: `R$ ${valorOuroPorPeca.toFixed(2)}`,
-                formula: `${peso}g × ${camada} × R$ ${ouro}/g = R$ ${valorOuroPorPeca.toFixed(2)}`
+                formula: `${peso}g × (${camada}mg ÷ 1000) × R$ ${ouro}/g = R$ ${valorOuroPorPeca.toFixed(2)}`
             });
             
             // Passo 2: Adicionar valor bruto
